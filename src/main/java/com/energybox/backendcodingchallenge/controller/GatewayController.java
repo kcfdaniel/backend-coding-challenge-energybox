@@ -32,7 +32,7 @@ public class GatewayController {
     }
 
     @ApiOperation( value = "get a gateway by sensor type")
-    @GetMapping("/{id}")
+    @GetMapping("/by-sensor-type/{sensorType}")
     public ResponseEntity<List<GatewayDTO>> getGatewayBySensorType(@PathVariable final SensorType sensorType) {
         return ResponseEntity.ok(gatewayService.getGatewayBySensorType(sensorType));
     }
