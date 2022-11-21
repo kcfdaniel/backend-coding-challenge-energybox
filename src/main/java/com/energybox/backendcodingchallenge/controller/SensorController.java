@@ -35,12 +35,12 @@ public class SensorController {
     }
 
     @ApiOperation( value = "get a sensor with a specific type" )
-    @GetMapping("/by-type/{type}")
+    @GetMapping("/by-type/{sensorType}")
     public ResponseEntity<List<SensorDTO>> getSensorsBySensorType(@PathVariable final SensorType sensorType) {
         return ResponseEntity.ok(sensorService.getSensorsBySensorType(sensorType));
     }
 
-    @ApiOperation( value = "get the sensors connected to a gateway" )
+    @ApiOperation( value = "get a sensor by id" )
     @GetMapping("/{id}")
     public ResponseEntity<SensorDTO> getSensor(@PathVariable final Long id) {
         return ResponseEntity.ok(sensorService.get(id));

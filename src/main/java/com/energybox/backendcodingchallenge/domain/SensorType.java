@@ -17,15 +17,12 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Sensor {
+public class SensorType {
     @Id
     @GeneratedValue
     private Long id;
     private String name;
 
-    @Relationship(type = "HAS")
-    private Set<LastReading> lastReadings = new HashSet<>();
-
-    @Relationship(type="CONNECTED_TO")
-    private Gateway gateway;
+    @Relationship(type="CONNECTED_TO", direction = Relationship.Direction.INCOMING)
+    private Set<Sensor> sensors = new HashSet<>();
 }

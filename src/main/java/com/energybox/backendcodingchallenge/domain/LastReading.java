@@ -2,21 +2,19 @@ package com.energybox.backendcodingchallenge.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Getter
-@RelationshipProperties
+@Setter
+@AllArgsConstructor
 public class LastReading {
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
     private Long id;
 
-    private String sensorType;
+    private Long timestamp;
+
+    private Long value;
 
     @TargetNode
     private Sensor sensor;

@@ -69,7 +69,7 @@ public class SensorService {
 
     public List<SensorDTO> getByGatewayId(Long id) {
         Gateway gateway = gatewayRepository.findById(id).get();
-        return sensorRepository.findAllByGateway(gateway).stream()
+        return gateway.getSensors().stream()
                 .map(sensor -> mapToDTO(sensor, new SensorDTO()))
                 .collect(Collectors.toList());
     }

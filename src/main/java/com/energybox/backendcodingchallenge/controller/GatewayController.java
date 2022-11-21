@@ -1,5 +1,6 @@
 package com.energybox.backendcodingchallenge.controller;
 
+import com.energybox.backendcodingchallenge.model.AddSensorToGatewayRequestDTO;
 import com.energybox.backendcodingchallenge.model.GatewayDTO;
 import com.energybox.backendcodingchallenge.model.SensorType;
 import com.energybox.backendcodingchallenge.service.GatewayService;
@@ -44,9 +45,9 @@ public class GatewayController {
     }
 
     @ApiOperation( value = "add a sensor to a gateway")
-    @PostMapping("/{gatewayId}/add-sensor/{sensorId}")
-    public ResponseEntity<Long> addSensor(@RequestBody @Valid final Long gatewayId, @RequestBody @Valid final Long sensorId) {
-        return new ResponseEntity<>(gatewayService.addSensor(gatewayId, sensorId), HttpStatus.CREATED);
+    @PutMapping("/{gatewayId}/add-sensor")
+    public ResponseEntity<Long> addSensor(@PathVariable final Long gatewayId, @RequestBody @Valid final AddSensorToGatewayRequestDTO requestDTO) {
+        return new ResponseEntity<>(gatewayService.addSensor(gatewayId, requestDTO.getSensorId()), HttpStatus.CREATED);
     }
 
     @ApiOperation( value = "update a gateway")

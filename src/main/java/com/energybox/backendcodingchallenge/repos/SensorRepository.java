@@ -9,8 +9,5 @@ import java.util.Arrays;
 import java.util.List;
 
 public interface SensorRepository extends Neo4jRepository<Sensor, Long> {
-
-    List<Sensor> findAllByGateway(Gateway gateway);
-
     List<Sensor> findAllByTypesContaining(SensorType sensorType);
 }

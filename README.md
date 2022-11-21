@@ -41,13 +41,13 @@ Try to complete the user stories below as best you can, and feel free to add in 
 
 - As a user I'd like to query for all gateways ok
 
-- As a user I'd like to query all sensors assigned to an existing gateway ok?
+- As a user I'd like to query all sensors assigned to an existing gateway ok
 
 - As a user I'd like to create a new sensor ok
 
 - As a user I'd like to create a new gateway ok
 
-- As a user I'd like to assign a sensor to a given gateway. ok?
+- As a user I'd like to assign a sensor to a given gateway. ok
 
 - As a user I'd like to query for sensors of a certain type. ok?
 
