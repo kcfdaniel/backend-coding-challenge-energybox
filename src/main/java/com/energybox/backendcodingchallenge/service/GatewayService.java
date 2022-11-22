@@ -2,10 +2,11 @@ package com.energybox.backendcodingchallenge.service;
 
 import com.energybox.backendcodingchallenge.domain.Gateway;
 import com.energybox.backendcodingchallenge.domain.Sensor;
+import com.energybox.backendcodingchallenge.domain.SensorType;
 import com.energybox.backendcodingchallenge.model.GatewayDTO;
-import com.energybox.backendcodingchallenge.model.SensorType;
 import com.energybox.backendcodingchallenge.repos.GatewayRepository;
 import com.energybox.backendcodingchallenge.repos.SensorRepository;
+import com.energybox.backendcodingchallenge.repos.SensorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,9 @@ public class GatewayService {
 
     @Autowired
     SensorRepository sensorRepository;
+
+    @Autowired
+    SensorTypeRepository sensorTypeRepository;
 
     public List<GatewayDTO> findAll() {
         return gatewayRepository.findAll(Sort.by("id"))
@@ -73,12 +77,14 @@ public class GatewayService {
         return gatewayRepository.save(gateway).getId();
     }
 
-    public List<GatewayDTO> getGatewayBySensorType(SensorType sensorType) {
-        List<Sensor> sensors = sensorRepository.findAllByTypesContaining(sensorType);
-        return sensors.stream().map(sensor -> sensor.getGateway())
-                .collect(Collectors.toList()).stream()
-                .distinct()
-                .map(gateway -> mapToDTO(gateway, new GatewayDTO()))
+    public List<GatewayDTO> getGatewayBySensorType(Long sensorTypeId) {
+        SensorType sensorType = sensorTypeRepository.findById(sensorTypeId).get();
+        return sensorType.getLastReadingReversed()
+                .stream().map(lastReadingReversed -> lastReadingReversed.getSensor())
+                .collect(Collectors.toList())
+                .stream().map(sensor -> sensor.getGateway())
+                .collect(Collectors.toList())
+                .stream().distinct().map(gateway -> mapToDTO(gateway, new GatewayDTO()))
                 .collect(Collectors.toList());
     }
 }

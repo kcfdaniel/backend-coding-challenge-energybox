@@ -1,6 +1,5 @@
 package com.energybox.backendcodingchallenge.model;
 
-import com.energybox.backendcodingchallenge.domain.Gateway;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class SensorDTO {
+public class SensorTypeDTO {
     private Long id;
     private String name;
 }

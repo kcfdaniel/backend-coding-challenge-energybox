@@ -10,6 +10,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Node
@@ -24,7 +25,7 @@ public class Sensor {
     private String name;
 
     @Relationship(type = "HAS")
-    private Set<LastReading> lastReadings = new HashSet<>();
+    private List<LastReading> lastReadings;
 
     @Relationship(type="CONNECTED_TO")
     private Gateway gateway;

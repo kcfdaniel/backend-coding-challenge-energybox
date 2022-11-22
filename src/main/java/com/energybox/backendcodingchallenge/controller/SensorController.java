@@ -1,7 +1,8 @@
 package com.energybox.backendcodingchallenge.controller;
 
+import com.energybox.backendcodingchallenge.model.AddSensorToGatewayRequestDTO;
+import com.energybox.backendcodingchallenge.model.AddSensorTypeToSensorRequestDTO;
 import com.energybox.backendcodingchallenge.model.SensorDTO;
-import com.energybox.backendcodingchallenge.model.SensorType;
 import com.energybox.backendcodingchallenge.service.GatewayService;
 import com.energybox.backendcodingchallenge.service.SensorService;
 import io.swagger.annotations.ApiOperation;
@@ -28,16 +29,16 @@ public class SensorController {
         return ResponseEntity.ok(sensorService.findAll());
     }
 
-    @ApiOperation( value = "get a sensor assigned to a gateway" )
+    @ApiOperation( value = "get the list of sensors assigned to a gateway" )
     @GetMapping("/by-gateway/{gatewayId}")
     public ResponseEntity<List<SensorDTO>> getSensorsByGatewayId(@PathVariable final Long gatewayId) {
         return ResponseEntity.ok(sensorService.getByGatewayId(gatewayId));
     }
 
     @ApiOperation( value = "get a sensor with a specific type" )
-    @GetMapping("/by-type/{sensorType}")
-    public ResponseEntity<List<SensorDTO>> getSensorsBySensorType(@PathVariable final SensorType sensorType) {
-        return ResponseEntity.ok(sensorService.getSensorsBySensorType(sensorType));
+    @GetMapping("/by-type/{sensorTypeId}")
+    public ResponseEntity<List<SensorDTO>> getSensorsBySensorType(@PathVariable final Long sensorTypeId) {
+        return ResponseEntity.ok(sensorService.getSensorsBySensorType(sensorTypeId));
     }
 
     @ApiOperation( value = "get a sensor by id" )
@@ -50,6 +51,12 @@ public class SensorController {
     @PostMapping
     public ResponseEntity<Long> createSensor(@RequestBody @Valid final SensorDTO sensorDTO) {
         return new ResponseEntity<>(sensorService.create(sensorDTO), HttpStatus.CREATED);
+    }
+
+    @ApiOperation( value = "add a type to a sensor")
+    @PutMapping("/{sensorId}/add-sensor-type")
+    public ResponseEntity<Long> addSensorType(@PathVariable final Long sensorId, @RequestBody @Valid final AddSensorTypeToSensorRequestDTO requestDTO) {
+        return new ResponseEntity<>(sensorService.addSensorType(sensorId, requestDTO.getSensorTypeId()), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

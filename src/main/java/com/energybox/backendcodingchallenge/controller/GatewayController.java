@@ -2,7 +2,6 @@ package com.energybox.backendcodingchallenge.controller;
 
 import com.energybox.backendcodingchallenge.model.AddSensorToGatewayRequestDTO;
 import com.energybox.backendcodingchallenge.model.GatewayDTO;
-import com.energybox.backendcodingchallenge.model.SensorType;
 import com.energybox.backendcodingchallenge.service.GatewayService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +31,10 @@ public class GatewayController {
         return ResponseEntity.ok(gatewayService.get(id));
     }
 
-    @ApiOperation( value = "get a gateway by sensor type")
-    @GetMapping("/by-sensor-type/{sensorType}")
-    public ResponseEntity<List<GatewayDTO>> getGatewayBySensorType(@PathVariable final SensorType sensorType) {
-        return ResponseEntity.ok(gatewayService.getGatewayBySensorType(sensorType));
+    @ApiOperation( value = "get the list of gateways by sensor type")
+    @GetMapping("/by-sensor-type/{sensorTypeId}")
+    public ResponseEntity<List<GatewayDTO>> getGatewayBySensorType(@PathVariable final Long sensorTypeId) {
+        return ResponseEntity.ok(gatewayService.getGatewayBySensorType(sensorTypeId));
     }
 
     @ApiOperation( value = "create a gateway")

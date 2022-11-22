@@ -1,11 +1,14 @@
 package com.energybox.backendcodingchallenge.service;
 
 import com.energybox.backendcodingchallenge.domain.Gateway;
+import com.energybox.backendcodingchallenge.domain.LastReading;
 import com.energybox.backendcodingchallenge.domain.Sensor;
+import com.energybox.backendcodingchallenge.domain.SensorType;
+import com.energybox.backendcodingchallenge.model.GatewayDTO;
 import com.energybox.backendcodingchallenge.model.SensorDTO;
-import com.energybox.backendcodingchallenge.model.SensorType;
 import com.energybox.backendcodingchallenge.repos.GatewayRepository;
 import com.energybox.backendcodingchallenge.repos.SensorRepository;
+import com.energybox.backendcodingchallenge.repos.SensorTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,9 @@ public class SensorService {
 
     @Autowired
     GatewayRepository gatewayRepository;
+
+    @Autowired
+    SensorTypeRepository sensorTypeRepository;
 
     public List<SensorDTO> findAll() {
         return sensorRepository.findAll(Sort.by("id"))
@@ -57,13 +63,11 @@ public class SensorService {
     private SensorDTO mapToDTO(final Sensor sensor, final SensorDTO sensorDTO) {
         sensorDTO.setId(sensor.getId());
         sensorDTO.setName(sensor.getName());
-        sensorDTO.setTypes(sensor.getTypes());
         return sensorDTO;
     }
 
     private Sensor mapToEntity(final SensorDTO sensorDTO, final Sensor sensor) {
         sensor.setName(sensorDTO.getName());
-        sensor.setTypes(sensorDTO.getTypes());
         return sensor;
     }
 
@@ -74,10 +78,23 @@ public class SensorService {
                 .collect(Collectors.toList());
     }
 
-    public List<SensorDTO> getSensorsBySensorType(SensorType sensorType) {
-        return sensorRepository.findAllByTypesContaining(sensorType)
-                .stream()
-                .map(sensor -> mapToDTO(sensor, new SensorDTO()))
+    public List<SensorDTO> getSensorsBySensorType(Long sensorTypeId) {
+        SensorType sensorType = sensorTypeRepository.findById(sensorTypeId).get();
+
+        return sensorType.getLastReadingReversed()
+                .stream().map(lastReadingReversed -> lastReadingReversed.getSensor())
+                .collect(Collectors.toList())
+                .stream().distinct().map(sensor -> mapToDTO(sensor, new SensorDTO()))
                 .collect(Collectors.toList());
+    }
+
+    public Long addSensorType(Long sensorId, Long sensorTypeId) {
+        Sensor sensor = sensorRepository.findById(sensorId).get();
+        SensorType sensorType = sensorTypeRepository.findById(sensorTypeId).get();
+        LastReading lastReading = new LastReading();
+        lastReading.setSensorType(sensorType);
+
+        sensor.getLastReadings().add(lastReading);
+        return sensorRepository.save(sensor).getId();
     }
 }

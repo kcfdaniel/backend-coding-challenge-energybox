@@ -9,7 +9,9 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Node
@@ -23,6 +25,6 @@ public class SensorType {
     private Long id;
     private String name;
 
-    @Relationship(type="CONNECTED_TO", direction = Relationship.Direction.INCOMING)
-    private Set<Sensor> sensors = new HashSet<>();
+    @Relationship(type = "HAS", direction = Relationship.Direction.INCOMING)
+    private List<LastReadingReversed> lastReadingReversed;
 }
