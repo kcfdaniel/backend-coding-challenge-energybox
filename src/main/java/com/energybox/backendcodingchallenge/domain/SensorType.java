@@ -25,6 +25,6 @@ public class SensorType {
     private Long id;
     private String name;
 
-    @Relationship(type = "HAS", direction = Relationship.Direction.INCOMING)
-    private List<LastReadingReversed> lastReadingReversed;
+//    @Relationship(type = "HAS", direction = Relationship.Direction.INCOMING)
+//    private List<LastReadingReversed> lastReadingReversed;
 }

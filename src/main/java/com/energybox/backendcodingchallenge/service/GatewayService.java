@@ -79,12 +79,13 @@ public class GatewayService {
 
     public List<GatewayDTO> getGatewayBySensorType(Long sensorTypeId) {
         SensorType sensorType = sensorTypeRepository.findById(sensorTypeId).get();
-        return sensorType.getLastReadingReversed()
-                .stream().map(lastReadingReversed -> lastReadingReversed.getSensor())
-                .collect(Collectors.toList())
-                .stream().map(sensor -> sensor.getGateway())
-                .collect(Collectors.toList())
-                .stream().distinct().map(gateway -> mapToDTO(gateway, new GatewayDTO()))
-                .collect(Collectors.toList());
+        return null;
+//        sensorType.getLastReadingReversed()
+//                .stream().map(lastReadingReversed -> lastReadingReversed.getSensor())
+//                .collect(Collectors.toList())
+//                .stream().map(sensor -> sensor.getGateways().get(0))
+//                .collect(Collectors.toList())
+//                .stream().distinct().map(gateway -> mapToDTO(gateway, new GatewayDTO()))
+//                .collect(Collectors.toList());
     }
 }

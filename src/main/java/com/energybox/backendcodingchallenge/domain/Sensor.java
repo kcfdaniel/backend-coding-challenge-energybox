@@ -27,6 +27,6 @@ public class Sensor {
     @Relationship(type = "HAS")
     private List<LastReading> lastReadings;
 
-    @Relationship(type="CONNECTED_TO")
-    private Gateway gateway;
+//    @Relationship(type="CONNECTED_TO")
+//    private List<Gateway> gateways;
 }

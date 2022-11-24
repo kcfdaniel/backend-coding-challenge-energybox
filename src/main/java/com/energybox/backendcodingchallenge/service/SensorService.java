@@ -81,11 +81,12 @@ public class SensorService {
     public List<SensorDTO> getSensorsBySensorType(Long sensorTypeId) {
         SensorType sensorType = sensorTypeRepository.findById(sensorTypeId).get();
 
-        return sensorType.getLastReadingReversed()
-                .stream().map(lastReadingReversed -> lastReadingReversed.getSensor())
-                .collect(Collectors.toList())
-                .stream().distinct().map(sensor -> mapToDTO(sensor, new SensorDTO()))
-                .collect(Collectors.toList());
+        return null;
+//        sensorType.getLastReadingReversed()
+//                .stream().map(lastReadingReversed -> lastReadingReversed.getSensor())
+//                .collect(Collectors.toList())
+//                .stream().distinct().map(sensor -> mapToDTO(sensor, new SensorDTO()))
+//                .collect(Collectors.toList());
     }
 
     public Long addSensorType(Long sensorId, Long sensorTypeId) {
